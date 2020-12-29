@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.wordpress.marianbuenosayres</groupId>
+    <artifactId>chapter-10</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kie-wb-distribution-wars</artifactId>
+  <packaging>pom</packaging>
+
+  <name>Chapter 10: KIE Workbench - Edited War Generator</name>
+  <description>This module builds the custom war configuration for JBoss 7.</description>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <finalName>kie-wb-${project.version}</finalName>
+          <descriptors>
+            <descriptor>src/main/assembly/assembly-kie-wb-edition.xml</descriptor>
+          </descriptors>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <!-- Internal dependencies -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-wb-distribution-wars</artifactId>
+      <version>${kie.version}</version>
+      <type>war</type>
+      <classifier>jboss-as7</classifier>
+    </dependency>
+
+    <!-- Extra service modules -->
+    <dependency>
+      <groupId>com.wordpress.marianbuenosayres</groupId>
+      <artifactId>web-service-module</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.wordpress.marianbuenosayres</groupId>
+      <artifactId>custom-work-item-handlers</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+
+</project>

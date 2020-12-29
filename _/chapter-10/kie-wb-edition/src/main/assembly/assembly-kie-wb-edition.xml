@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+  <!-- including a . in the id will modify the *classifier* of the artifact, instead of the name of the artifact -->
+  <id>edited</id>
+  <formats>
+    <format>war</format>
+    <format>dir</format>
+  </formats>
+
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>${project.basedir}/src/main/edition</directory>
+      <outputDirectory>.</outputDirectory>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <dependencySet>
+      <includes>
+        <!-- We add our extra JAR to WEB-INF/lib -->
+        <include>com.wordpress.marianbuenosayres:web-service-module:jar</include>
+        <include>com.wordpress.marianbuenosayres:custom-work-item-handlers:jar</include>
+      </includes>
+      <unpack>false</unpack>
+      <outputDirectory>WEB-INF/lib</outputDirectory>
+    </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.kie:kie-wb-distribution-wars:war:jboss-as7</include>
+      </includes>
+      <outputDirectory>.</outputDirectory>
+      <unpack>true</unpack>
+      <unpackOptions>
+        <excludes>
+          <!-- These are the added files to the configuration, that we need to replace -->
+          <exclude>WEB-INF/classes/META-INF/CustomWorkItemHandlers.conf</exclude>
+          <exclude>WEB-INF/web.xml</exclude>
+          <exclude>WEB-INF/jboss-web.xml</exclude>
+          <exclude>WEB-INF/web-ui-server.xml</exclude>
+        </excludes>
+      </unpackOptions>
+      <useStrictFiltering>true</useStrictFiltering>
+    </dependencySet>
+  </dependencySets>
+
+</assembly>
